@@ -50,6 +50,24 @@ public class Maze {
 		
 	}
 	
+	/**
+	 * Gets the char at (row, column) where top left is (0,0) and bottom right is (rowCount-1, colCount-1)
+	 *
+	 * To be redone with Tiles at a later point
+	 */
+	public char getChar(int row, int column) {
+		
+		if (row < 0 || row >= rowCount) {
+			throw new IllegalArgumentException("row input invalid!");
+		}
+		if (column < 0 || column >= colCount) {
+			throw new IllegalArgumentException("column input invalid!");
+		}
+		
+		return maze[row][column];
+		
+	}
+	
 	public static void main(String[] args) {
 		char[][] test = null;
 		
