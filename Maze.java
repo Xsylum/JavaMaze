@@ -5,6 +5,10 @@
  *		  -populate maze through user input
  *		  -replace char[][] with a Tile[][] system!
  */
+ 
+import java.util.Arrays; // does this go before or after javadoc?
+import java.io.*;
+ 
 public class Maze {
 
 	static int DEFAULT_SIZE = 5;
@@ -45,6 +49,53 @@ public class Maze {
 	public void populateMaze() {
 		
 	}
+	
+	
+	/**
+	 *              Will populate the maze using a file input (Strings and chars currently; maybe char to Tile converter?);
+	 */
+	public void populateMazeFromFile(String fileName) {
+		
+		try {
+			BufferedReader input;
+			input = new BufferedReader ( new InputStreamReader ( new FileInputStream (fileName) ) );
+			String fileLine;
+			int fileLineCount = 0; // will be 1 ahead of maze index, should max at rowCount
+			
+			
+			while ( (fileLine = input.readLine()) != null) {
+				fileLineCount++;
+				if (fileLineCount > rowCount) { // overfill!
+					throw new IllegalArgumentException("File line count exceeds maze size!");
+				}
+				
+				if (fileLine.length() != colCount) { // chars per line must be equal!
+					throw new IllegalArgumentException("File column count on line" + (fileLineCount + 1) + "not equal to colCount!");  // This line should probably wrap
+				}
+				
+				for (int col = 0; col < fileLine.length(); col++) {
+					maze[fileLineCount-1][col] = fileLine.charAt(col);
+				}
+			}
+			
+			if (fileLineCount != rowCount) { // underfill!
+				throw new IllegalArgumentException("File line count less than maze size!");
+			}
+		} catch (IllegalArgumentException e) { // the input file is invalid
+			for (char[] array: maze) { // empty the maze
+				Arrays.fill(array, '\u0000');
+			}
+			e.printStackTrace();
+			System.exit(1);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(2);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(2);
+		}
+		
+	}
 		
 	public void populateRow() {
 		
@@ -66,14 +117,6 @@ public class Maze {
 		
 		return maze[row][column];
 		
-	}
-	
-	public static void main(String[] args) {
-		char[][] test = null;
-		
-		Maze testMaze = new Maze();
-		
-		testMaze.populateMaze(test);
 	}
 
 }
