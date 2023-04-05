@@ -12,8 +12,8 @@ import java.io.*;
 public class Maze {
 
 	static int DEFAULT_SIZE = 5;
-	int rowCount, colCount;
-	char[][] maze;  // char[rows][columns]
+	private int rowCount, colCount;
+	private char[][] maze;  // char[rows][columns]
 	
 	/**
 	 * Default Constructor for maze class
@@ -130,6 +130,14 @@ public class Maze {
 		
 		return maze[row][column];
 		
+	}
+	
+	public int getRowCount() {
+		return rowCount;
+	}
+	
+	public int getColCount() {
+		return colCount;
 	}
 	
 	public String toString() {

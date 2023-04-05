@@ -7,6 +7,17 @@
  */
 public class MazeSimulation {
 	
-	// CLASS NOT IMPLEMENTED
+	private List // Design this
+	
+	
+	public void solve(Maze maze)
+	{
+		LinkedQueue moveQueue
+	}
+	
+	
+	public static void main(String[] args) {
+		
+	}
 	
 }
