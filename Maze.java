@@ -15,17 +15,28 @@ public class Maze {
 	int rowCount, colCount;
 	char[][] maze;  // char[rows][columns]
 	
+	/**
+	 * Default Constructor for maze class
+	 */ 
 	public Maze() {
 		rowCount = colCount = DEFAULT_SIZE;
 		maze = new char[rowCount][colCount];
 	}
 	
+	
+	/**
+	 * Constructor for maze class which takes the dimensions of the maze as inputs
+	 */
 	public Maze(int rows, int columns) {
 		rowCount = rows;
 		colCount = columns;
 		maze = new char[rowCount][colCount];
 	}
 	
+	
+	/**
+	 *  Populates the Maze (****CURRENTLY WITH CHARS****) using a 2D char array input
+	 */
 	public void populateMaze(char[][] mazeInput) {
 		
 		if (mazeInput == null) {
@@ -43,6 +54,7 @@ public class Maze {
 		}
 	}
 	
+	
 	/**
 	 * 				Will use USER INPUT
 	 */
@@ -57,20 +69,22 @@ public class Maze {
 	public void populateMazeFromFile(String fileName) {
 		
 		try {
+			
 			BufferedReader input;
 			input = new BufferedReader ( new InputStreamReader ( new FileInputStream (fileName) ) );
 			String fileLine;
-			int fileLineCount = 0; // will be 1 ahead of maze index, should max at rowCount
+			int fileLineCount = 0; // 1 ahead of maze index
 			
-			
-			while ( (fileLine = input.readLine()) != null) {
+			while ( (fileLine = input.readLine()) != null) { // not end of file
+				
 				fileLineCount++;
-				if (fileLineCount > rowCount) { // overfill!
+				if (fileLineCount > rowCount) { // ERROR overfill!
 					throw new IllegalArgumentException("File line count exceeds maze size!");
 				}
 				
 				if (fileLine.length() != colCount) { // chars per line must be equal!
-					throw new IllegalArgumentException("File column count on line" + (fileLineCount + 1) + "not equal to colCount!");  // This line should probably wrap
+					throw new IllegalArgumentException("File column count on line" + (fileLineCount + 1) 
+														+ " not equal to colCount!");
 				}
 				
 				for (int col = 0; col < fileLine.length(); col++) {
@@ -78,13 +92,12 @@ public class Maze {
 				}
 			}
 			
-			if (fileLineCount != rowCount) { // underfill!
+			if (fileLineCount != rowCount) { // ERROR underfill!
 				throw new IllegalArgumentException("File line count less than maze size!");
 			}
+				
 		} catch (IllegalArgumentException e) { // the input file is invalid
-			for (char[] array: maze) { // empty the maze
-				Arrays.fill(array, '\u0000');
-			}
+			for (char[] array: maze) Arrays.fill(array, '\u0000');  // empty the array
 			e.printStackTrace();
 			System.exit(1);
 		} catch (FileNotFoundException e) {
@@ -116,6 +129,25 @@ public class Maze {
 		}
 		
 		return maze[row][column];
+		
+	}
+	
+	public String toString() {
+		
+		StringBuffer output = new StringBuffer();
+		
+		output.append("===== Maze =====\n");
+		
+		for (int i = 0; i < rowCount; i++) {
+			
+			for (int j = 0; j < colCount; j++) {
+				output.append(maze[i][j]);
+			}
+			
+			output.append('\n');
+		}
+		
+		return output.toString();
 		
 	}
 
