@@ -101,10 +101,10 @@ public class Maze {
 					 * To Do: Introduce fail states if a char is not one of accepted characters
 					 *
 					 */
-					if (fileLine.currentChar == "S") {
+					if (currentChar == "S") {
 						hasStartPoint = true;
 						start = new CoordinatePair(fileLineCount-1, col);
-					} else if (fileLine.currentChar == "E") {
+					} else if (currentChar == "E") {
 						hasEndPoint = true;
 						finish = new CoordinatePair(fileLineCount-1, col);
 					}
