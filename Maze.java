@@ -14,6 +14,8 @@ public class Maze {
 	static int DEFAULT_SIZE = 5;
 	private int rowCount, colCount;
 	private char[][] maze;  // char[rows][columns]
+	private CoordinatePair<Integer> start;  // Temporary, eventually Tile class will use coordinate pairs, and this will reference tile
+	private CoordinatePair<Integer> finish;
 	
 	/**
 	 * Default Constructor for maze class
@@ -75,6 +77,9 @@ public class Maze {
 			String fileLine;
 			int fileLineCount = 0; // 1 ahead of maze index
 			
+			boolean hasStartPoint;
+			boolean hasEndPoint;
+			
 			while ( (fileLine = input.readLine()) != null) { // not end of file
 				
 				fileLineCount++;
@@ -88,12 +93,30 @@ public class Maze {
 				}
 				
 				for (int col = 0; col < fileLine.length(); col++) {
-					maze[fileLineCount-1][col] = fileLine.charAt(col);
+					
+					char currentChar = fileLine.charAt(col);
+					maze[fileLineCount-1][col] = currentChar;
+					
+					/*
+					 * To Do: Introduce fail states if a char is not one of accepted characters
+					 *
+					 */
+					if (fileLine.currentChar == "S") {
+						hasStartPoint = true;
+						start = new CoordinatePair(fileLineCount-1, col);
+					} else if (fileLine.currentChar == "E") {
+						hasEndPoint = true;
+						finish = new CoordinatePair(fileLineCount-1, col);
+					}
 				}
 			}
 			
 			if (fileLineCount != rowCount) { // ERROR underfill!
 				throw new IllegalArgumentException("File line count less than maze size!");
+			}
+			
+			if (!hasStartPoint || !hasEndPoint) {
+				throw new IllegalArgumentException("File is missing start or end point");
 			}
 				
 		} catch (IllegalArgumentException e) { // the input file is invalid
