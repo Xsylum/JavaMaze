@@ -77,8 +77,8 @@ public class Maze {
 			String fileLine;
 			int fileLineCount = 0; // 1 ahead of maze index
 			
-			boolean hasStartPoint;
-			boolean hasEndPoint;
+			boolean hasStartPoint = false;
+			boolean hasEndPoint = false;
 			
 			while ( (fileLine = input.readLine()) != null) { // not end of file
 				
@@ -88,7 +88,7 @@ public class Maze {
 				}
 				
 				if (fileLine.length() != colCount) { // chars per line must be equal!
-					throw new IllegalArgumentException("File column count on line" + (fileLineCount + 1) 
+					throw new IllegalArgumentException("File column count on line " + (fileLineCount + 1) 
 														+ " not equal to colCount!");
 				}
 				
@@ -101,12 +101,12 @@ public class Maze {
 					 * To Do: Introduce fail states if a char is not one of accepted characters
 					 *
 					 */
-					if (currentChar == "S") {
+					if (currentChar == 'S') {
 						hasStartPoint = true;
-						start = new CoordinatePair(fileLineCount-1, col);
-					} else if (currentChar == "E") {
+						start = new CoordinatePair<Integer>(fileLineCount-1, col);
+					} else if (currentChar == 'E') {
 						hasEndPoint = true;
-						finish = new CoordinatePair(fileLineCount-1, col);
+						finish = new CoordinatePair<Integer>(fileLineCount-1, col);
 					}
 				}
 			}
