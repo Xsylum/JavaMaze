@@ -116,7 +116,7 @@ public class Maze {
 			}
 			
 			if (!hasStartPoint || !hasEndPoint) {
-				throw new IllegalArgumentException("File is missing start or end point");
+				throw new IllegalArgumentException("Start or end point missing in file");
 			}
 				
 		} catch (IllegalArgumentException e) { // the input file is invalid
@@ -153,6 +153,14 @@ public class Maze {
 		
 		return maze[row][column];
 		
+	}
+	
+	public CoordinatePair getStart() {
+		return start;
+	}
+	
+	public CoordinatePair getFinish() {
+		return finish;
 	}
 	
 	public int getRowCount() {
