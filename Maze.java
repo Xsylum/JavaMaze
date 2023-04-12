@@ -11,11 +11,45 @@ import java.io.*;
  
 public class Maze {
 
+	private static class Tile {
+		
+		enum TileType { // ****Should this contain visited?
+			WALL,
+			START,
+			END,
+			PATH
+		}
+		
+		private TileType type;
+		private Tile up, right, down, left;
+		private boolean visited;               // ****Alternative (could also just have a list of tiles in maze solver, do == cause they point to same id
+		private CoordinatePair<Integer> coord;
+		
+		Tile (TileType type, CoordinatePair<Integer> coord) {
+			this.type = type;
+			this.coord = coord;
+		}
+		
+		private TileType getType() {
+			return type;
+		}
+		
+		private CoordinatePair getCoordinates() {
+			return coord;
+		}
+		
+		
+	}
+
+
 	static int DEFAULT_SIZE = 5;
 	private int rowCount, colCount;
 	private char[][] maze;  // char[rows][columns]
 	private CoordinatePair<Integer> start;  // Temporary, eventually Tile class will use coordinate pairs, and this will reference tile
 	private CoordinatePair<Integer> finish;
+	private Tile startTile;
+	private Tile finishTile;
+	private DoublyLinkedList<Tile> tileList;
 	
 	/**
 	 * Default Constructor for maze class
